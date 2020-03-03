@@ -28,7 +28,8 @@ class EtcdGrpcConan(ConanFile):
     requires = (
         "c-ares/1.15.0@conan/stable",
         "grpc/1.25.0@inexorgame/stable",
-        "protobuf/3.9.1@bincrafters/stable"	
+        "protobuf/3.9.1@bincrafters/stable",
+	"protoc_installer/3.9.1@bincrafters/stable"	
     )
 
     def configure(self):
@@ -46,19 +47,17 @@ class EtcdGrpcConan(ConanFile):
         cmake = CMake(self)        
 
         if self.options.shared:
-            cmake.definitions["BUILD_SHARED_LIBS"] = "ON"
+            cmake.definitions["CONAN_BUILD_SHARED_LIBS"] = "ON"
 
         cmake.configure(build_folder=self._build_subfolder, source_folder=self._source_subfolder)
         return cmake
 
     def build(self):
-        protobuf_module = self.deps_cpp_info["protobuf"]
-        protoc_path = os.path.join(protobuf_module.rootpath, protobuf_module.bindirs[0], 'protoc')
-        protobuf_include_dir = os.path.join(protobuf_module.rootpath, protobuf_module.include_paths[0])
+        protoc_module = self.deps_cpp_info["protoc_installer"]
+        protoc_path = os.path.join(protoc_module.rootpath, protoc_module.bindirs[0], 'protoc')
 
         grpc_module = self.deps_cpp_info["grpc"]
         grpc_cpp_plugin_path = os.path.join(grpc_module.rootpath, grpc_module.bindirs[0], 'grpc_cpp_plugin')
-        grpc_include_dir = os.path.join(grpc_module.rootpath, grpc_module.include_paths[0])
 
         proto_dir = "%s/proto" % self._source_subfolder
         out_dir = "%s/src" % self._source_subfolder
