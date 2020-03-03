@@ -3,29 +3,30 @@ name: etcd-grpc CI
 on:
   pull_request:
     paths:
-      - 'recipes/etcd-grpc/3.0.0/**'
+      - 'recipes/etcd-grpc/4.0.0/**'
       - 'build.py'
       - '.github/workflows/etcd-grpc.yml'
   push:
     branches:
       - master
     paths:
-      - 'recipes/etcd-grpc/3.0.0/**'
+      - 'recipes/etcd-grpc/4.0.0/**'
       - 'build.py'
       - '.github/workflows/etcd-grpc.yml'
 
 env:
-  CONAN_USERNAME: 'borune-k12'
+  CONAN_USERNAME: 'trassir'
+  CONAN_LOGIN_USERNAME: 'trassir-ci-bot'
   CONAN_PASSWORD: ${{ secrets.BintrayApiKey }}
   CONAN_STABLE_CHANNEL: 'stable'
-  CONAN_UPLOAD: 'https://api.bintray.com/conan/test-trassir-ci/test-etcd-grpc'
+  CONAN_UPLOAD: 'https://api.bintray.com/conan/trassir/conan-public'
   CONAN_UPLOAD_ONLY_WHEN_STABLE: 1
   CONAN_STABLE_BRANCH_PATTERN: 'master'
-  CONAN_REMOTES: 'https://api.bintray.com/conan/test-trassir-ci/test-etcd-grpc'
-  CONAN_REFERENCE: 'etcd-grpc/3.0.0'
+  CONAN_REMOTES: 'https://api.bintray.com/conan/trassir/conan-public'
+  CONAN_REFERENCE: 'etcd-grpc/4.0.0'
 
 jobs:
-  etcd-grpc_3_0_0:
+  etcd-grpc_4_0_0:
     strategy:
       matrix:
         build: ['linux-gcc4.8', 'linux-gcc7', 'linux-gcc9']
@@ -67,7 +68,7 @@ jobs:
       - name: Build and Optionally Upload
         uses: trassir/run-cpt@v0.2.1-trassir
         with:
-          work-dir: sources/recipes/etcd-grpc/3.0.0
+          work-dir: sources/recipes/etcd-grpc/4.0.0
           build-script: ../../../build.py
           compiler: ${{ matrix.compiler }}
           compiler-versions: ${{ matrix.compiler_version }}

@@ -5,7 +5,7 @@ import os
 
 class EtcdGrpcConan(ConanFile):
     name = "etcd-grpc"
-    version = "3.0.0"
+    version = "4.0.0"
     description = "DSSL etcd gRPC headers library"
     topics = ("conan", "grpc", "protobuf", "etcd")
     url = "https://github.com/trassir/etcd-grpc"
@@ -27,7 +27,7 @@ class EtcdGrpcConan(ConanFile):
 
     requires = (
         "c-ares/1.15.0@conan/stable",
-        "grpc/1.25.0@inexorgame/stable",
+        "grpc/1.20.0@inexorgame/stable",
         "protobuf/3.9.1@bincrafters/stable",
 	"protoc_installer/3.9.1@bincrafters/stable"	
     )
